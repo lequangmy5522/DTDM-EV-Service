@@ -6,7 +6,7 @@
 // ========================================================
 // 1. GLOBAL CONFIG & STATE
 // ========================================================
-const API_BASE_URL = "http://localhost";
+const API_BASE_URL = "http://13.70.33.44";
 const TOKEN_KEY = "jwt_token";
 let currentUserId = null;
 
