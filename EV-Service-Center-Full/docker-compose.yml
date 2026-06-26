@@ -150,7 +150,10 @@ services:
 
   # ===================== USER SERVICE =====================
   user-service:
-    build: ./services/user-service
+    image: lequangm/user-service:latest
+    build:
+      context: ./services/user-service
+      dockerfile: Dockerfile
     container_name: user-service
     command: gunicorn --bind 0.0.0.0:5000 "app:create_app()"
     volumes:
@@ -172,7 +175,10 @@ services:
 
   # ===================== INVENTORY SERVICE =====================
   inventory-service:
-    build: ./services/inventory-service
+    image: lequangm/inventory-service:latest
+    build:
+      context: ./services/inventory-service
+      dockerfile: Dockerfile
     container_name: inventory-service
     command: gunicorn --bind 0.0.0.0:8000 "app:create_app()"
     volumes:
@@ -191,7 +197,10 @@ services:
 
   # ===================== BOOKING SERVICE =====================
   booking-service:
-    build: ./services/booking-service
+    image: lequangm/booking-service:latest
+    build:
+      context: ./services/booking-service
+      dockerfile: Dockerfile
     container_name: booking-service
     command: gunicorn --bind 0.0.0.0:8001 "app:create_app()"
     volumes:
@@ -213,6 +222,7 @@ services:
 
   # ===================== FINANCE SERVICE =====================
   finance-service:
+    image: lequangm/finance-service:latest
     build:
       context: ./services/finance-service
       dockerfile: Dockerfile
@@ -246,7 +256,10 @@ services:
 
   # ===================== MAINTENANCE SERVICE =====================
   maintenance-service:
-    build: ./services/maintenance-service
+    image: lequangm/maintenance-service:latest
+    build:
+      context: ./services/maintenance-service
+      dockerfile: Dockerfile
     container_name: maintenance-service
     command: gunicorn --bind 0.0.0.0:8003 "app:create_app()"
     volumes:
@@ -276,7 +289,10 @@ services:
 
   # ===================== PAYMENT SERVICE =====================
   payment-service:
-    build: ./services/payment-service
+    image: lequangm/payment-service:latest
+    build:
+      context: ./services/payment-service
+      dockerfile: Dockerfile
     container_name: payment-service
     command: gunicorn -c gunicorn_config.py "app:create_app()"
     volumes:
@@ -300,7 +316,10 @@ services:
   # ===================== NOTIFICATION SERVICE =====================
 
   notification-service:
-    build: ./services/notification-service
+    image: lequangm/notification-service:latest
+    build:
+      context: ./services/notification-service
+      dockerfile: Dockerfile
     container_name: notification-service
     command: gunicorn --bind 0.0.0.0:8005 wsgi:application
     volumes:
@@ -325,7 +344,10 @@ services:
 
   # ===================== REPORT SERVICE =====================
   report-service:
-    build: ./services/report-service
+    image: lequangm/report-service:latest
+    build:
+      context: ./services/report-service
+      dockerfile: Dockerfile
     container_name: report-service
     command: gunicorn --bind 0.0.0.0:8006 wsgi:application
     volumes:
@@ -364,7 +386,10 @@ services:
       retries: 5
 
   chat-service:
-    build: ./services/chat-service
+    image: lequangm/chat-service:latest
+    build:
+      context: ./services/chat-service
+      dockerfile: Dockerfile
     container_name: chat-service
     command: gunicorn --worker-class eventlet -w 1 --bind 0.0.0.0:8007 "app:create_app()"
     volumes:
@@ -405,7 +430,10 @@ services:
       retries: 5
 
   staff-service:
-    build: ./services/staff-service
+    image: lequangm/staff-service:latest
+    build:
+      context: ./services/staff-service
+      dockerfile: Dockerfile
     container_name: staff-service
     command: gunicorn --bind 0.0.0.0:8008 --workers 2 --timeout 120 "wsgi:application"
     volumes:
@@ -428,7 +456,10 @@ services:
 
   # ===================== FRONTEND SERVICE =====================
   frontend:
-    build: ./frontend
+    image: lequangm/frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
     container_name: frontend_server
     expose:
       - "80"
@@ -437,6 +468,7 @@ services:
 
   # ===================== API GATEWAY (NGINX) =====================
   api-gateway:
+    image: lequangm/api-gateway:latest
     build:
       context: ./api-gateway
       dockerfile: Dockerfile
