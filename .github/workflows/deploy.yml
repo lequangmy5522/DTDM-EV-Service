@@ -26,7 +26,8 @@ jobs:
       - name: Build frontend
         uses: docker/build-push-action@v6
         with:
-          context: ./frontend
+          context: ./DTDM/EV-Service-Center-Full/frontend
+          file: ./DTDM/EV-Service-Center-Full/frontend/dockerfile
           push: true
           tags: lequangm/frontend:latest
 
@@ -37,82 +38,92 @@ jobs:
       - name: Build API Gateway
         uses: docker/build-push-action@v6
         with:
-          context: ./api-gateway
+          context: ./DTDM/EV-Service-Center-Full/api-gateway
+          file: ./DTDM/EV-Service-Center-Full/api-gateway/Dockerfile
           push: true
           tags: lequangm/api-gateway:latest
 
       ##########################
-      # User Service           #
+      # Services               #
       ##########################
 
       - name: Build User Service
         uses: docker/build-push-action@v6
         with:
-          context: ./services/user-service
+          context: ./DTDM/EV-Service-Center-Full/services/user-service
+          file: ./DTDM/EV-Service-Center-Full/services/user-service/Dockerfile
           push: true
           tags: lequangm/user-service:latest
 
       - name: Build Inventory Service
         uses: docker/build-push-action@v6
         with:
-          context: ./services/inventory-service
+          context: ./DTDM/EV-Service-Center-Full/services/inventory-service
+          file: ./DTDM/EV-Service-Center-Full/services/inventory-service/Dockerfile
           push: true
           tags: lequangm/inventory-service:latest
 
       - name: Build Booking Service
         uses: docker/build-push-action@v6
         with:
-          context: ./services/booking-service
+          context: ./DTDM/EV-Service-Center-Full/services/booking-service
+          file: ./DTDM/EV-Service-Center-Full/services/booking-service/Dockerfile
           push: true
           tags: lequangm/booking-service:latest
 
       - name: Build Finance Service
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: ./services/finance-service/Dockerfile
+          context: ./DTDM/EV-Service-Center-Full/services/finance-service
+          file: ./DTDM/EV-Service-Center-Full/services/finance-service/Dockerfile
           push: true
           tags: lequangm/finance-service:latest
 
       - name: Build Maintenance Service
         uses: docker/build-push-action@v6
         with:
-          context: ./services/maintenance-service
+          context: ./DTDM/EV-Service-Center-Full/services/maintenance-service
+          file: ./DTDM/EV-Service-Center-Full/services/maintenance-service/Dockerfile
           push: true
           tags: lequangm/maintenance-service:latest
 
       - name: Build Payment Service
         uses: docker/build-push-action@v6
         with:
-          context: ./services/payment-service
+          context: ./DTDM/EV-Service-Center-Full/services/payment-service
+          file: ./DTDM/EV-Service-Center-Full/services/payment-service/Dockerfile
           push: true
           tags: lequangm/payment-service:latest
 
       - name: Build Notification Service
         uses: docker/build-push-action@v6
         with:
-          context: ./services/notification-service
+          context: ./DTDM/EV-Service-Center-Full/services/notification-service
+          file: ./DTDM/EV-Service-Center-Full/services/notification-service/Dockerfile
           push: true
           tags: lequangm/notification-service:latest
 
       - name: Build Report Service
         uses: docker/build-push-action@v6
         with:
-          context: ./services/report-service
+          context: ./DTDM/EV-Service-Center-Full/services/report-service
+          file: ./DTDM/EV-Service-Center-Full/services/report-service/Dockerfile
           push: true
           tags: lequangm/report-service:latest
 
       - name: Build Chat Service
         uses: docker/build-push-action@v6
         with:
-          context: ./services/chat-service
+          context: ./DTDM/EV-Service-Center-Full/services/chat-service
+          file: ./DTDM/EV-Service-Center-Full/services/chat-service/Dockerfile
           push: true
           tags: lequangm/chat-service:latest
 
       - name: Build Staff Service
         uses: docker/build-push-action@v6
         with:
-          context: ./services/staff-service
+          context: ./DTDM/EV-Service-Center-Full/services/staff-service
+          file: ./DTDM/EV-Service-Center-Full/services/staff-service/Dockerfile
           push: true
           tags: lequangm/staff-service:latest
 
