@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Management - EV Service Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .tab-button.active {
+        background-color: #4f46e5;
+        color: white;
+      }
+      .dashboard-section {
+        display: none;
+        animation: fadeIn 0.5s;
+      }
+      .dashboard-section.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      input:focus,
+      textarea:focus,
+      select:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+        outline: none;
+      }
+      .status-badge {
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .status-active {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .status-busy {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+      .status-on-leave {
+        background-color: #e0e7ff;
+        color: #3730a3;
+      }
+      .status-resigned {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-white shadow">
+      <div
+        class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center"
+      >
+        <h1 class="text-2xl font-bold text-gray-900">
+          Quản Lý Nhân Sự
+        </h1>
+        <div class="flex items-center space-x-4">
+          <span id="user-info" class="text-gray-600"></span>
+          <a
+            href="admin.html"
+            class="text-gray-600 hover:text-indigo-600 font-medium"
+          >
+            Quay lại Admin
+          </a>
+          <button
+            onclick="logout()"
+            class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+          >
+            Đăng Xuất
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+      <div class="flex space-x-2 border-b border-gray-200">
+        <button
+          class="tab-button active px-6 py-3 font-medium text-gray-700 hover:text-indigo-600 border-b-2 border-transparent"
+          onclick="switchTab('staff-list')"
+        >
+          Danh Sách Nhân Viên
+        </button>
+        <button
+          class="tab-button px-6 py-3 font-medium text-gray-700 hover:text-indigo-600 border-b-2 border-transparent"
+          onclick="switchTab('assignments')"
+        >
+          Phân Công Công Việc
+        </button>
+        <button
+          class="tab-button px-6 py-3 font-medium text-gray-700 hover:text-indigo-600 border-b-2 border-transparent"
+          onclick="switchTab('shifts')"
+        >
+          Lịch Làm Việc
+        </button>
+        <button
+          class="tab-button px-6 py-3 font-medium text-gray-700 hover:text-indigo-600 border-b-2 border-transparent"
+          onclick="switchTab('certificates')"
+        >
+          Chứng Chỉ
+        </button>
+        <button
+          class="tab-button px-6 py-3 font-medium text-gray-700 hover:text-indigo-600 border-b-2 border-transparent"
+          onclick="switchTab('performance')"
+        >
+          Hiệu Suất
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Staff List Section -->
+      <div id="staff-list" class="dashboard-section active">
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold">Danh Sách Nhân Viên</h2>
+            <button
+              onclick="openAddStaffModal()"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+            >
+              + Thêm Nhân Viên
+            </button>
+          </div>
+
+          <!-- Filters -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <select
+              id="filter-role"
+              class="border border-gray-300 rounded-lg px-3 py-2"
+              onchange="filterStaff()"
+            >
+              <option value="">Tất cả vai trò</option>
+              <option value="technician">Kỹ thuật viên</option>
+              <option value="senior_technician">Kỹ thuật viên chính</option>
+              <option value="team_leader">Trưởng nhóm</option>
+              <option value="manager">Quản lý</option>
+            </select>
+
+            <select
+              id="filter-specialization"
+              class="border border-gray-300 rounded-lg px-3 py-2"
+              onchange="filterStaff()"
+            >
+              <option value="">Tất cả chuyên môn</option>
+              <option value="ev_specialist">Chuyên gia EV</option>
+              <option value="battery_expert">Chuyên gia Pin</option>
+              <option value="electrical_systems">Hệ thống điện</option>
+              <option value="mechanical_systems">Hệ thống cơ khí</option>
+              <option value="diagnostics">Chẩn đoán</option>
+              <option value="general">Tổng hợp</option>
+            </select>
+
+            <select
+              id="filter-status"
+              class="border border-gray-300 rounded-lg px-3 py-2"
+              onchange="filterStaff()"
+            >
+              <option value="active">Đang làm việc</option>
+              <option value="">Tất cả trạng thái</option>
+              <option value="busy">Đang bận</option>
+              <option value="on_leave">Nghỉ phép</option>
+              <option value="resigned">Đã nghỉ việc</option>
+            </select>
+          </div>
+
+          <!-- Staff Table -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Mã NV
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Họ Tên
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Vai Trò
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Chuyên Môn
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Trạng Thái
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tasks Hoàn Thành
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Đánh Giá
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Thao Tác
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="staff-table-body" class="bg-white divide-y divide-gray-200">
+                <!-- Staff rows will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assignments Section -->
+      <div id="assignments" class="dashboard-section">
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold">Phân Công Công Việc</h2>
+            <button
+              onclick="openAssignTaskModal()"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+            >
+              + Phân Công Mới
+            </button>
+          </div>
+
+          <!-- Assignment Table -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    ID
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nhân Viên
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Task ID
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Ưu Tiên
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Trạng Thái
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Phân Công Lúc
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Thao Tác
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="assignments-table-body" class="bg-white divide-y divide-gray-200">
+                <!-- Assignment rows will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shifts Section -->
+      <div id="shifts" class="dashboard-section">
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold">Lịch Làm Việc</h2>
+            <button
+              onclick="openAddShiftModal()"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+            >
+              + Tạo Ca Làm Việc
+            </button>
+          </div>
+
+          <!-- Calendar view can be added here -->
+          <div id="shifts-calendar" class="mb-6">
+            <!-- Simple weekly view -->
+          </div>
+
+          <!-- Shifts Table -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nhân Viên
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Ngày
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Ca
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Giờ
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Trạng Thái
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Thao Tác
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="shifts-table-body" class="bg-white divide-y divide-gray-200">
+                <!-- Shift rows will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certificates Section -->
+      <div id="certificates" class="dashboard-section">
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold">Quản Lý Chứng Chỉ</h2>
+            <button
+              onclick="openAddCertificateModal()"
+              class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+            >
+              + Thêm Chứng Chỉ
+            </button>
+          </div>
+
+          <!-- Expiring Soon Alert -->
+          <div id="expiring-alert" class="hidden mb-6 bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-yellow-700">
+                  <span class="font-medium" id="expiring-count"></span> chứng chỉ sắp hết hạn trong 30 ngày tới!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certificates Table -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nhân Viên
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tên Chứng Chỉ
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Loại
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Ngày Cấp
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Ngày Hết Hạn
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Trạng Thái
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Thao Tác
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="certificates-table-body" class="bg-white divide-y divide-gray-200">
+                <!-- Certificate rows will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Section -->
+      <div id="performance" class="dashboard-section">
+        <div class="bg-white rounded-lg shadow p-6">
+          <h2 class="text-xl font-bold mb-6">Dashboard Hiệu Suất</h2>
+
+          <!-- Performance Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-blue-50 p-6 rounded-lg">
+              <h3 class="text-sm font-medium text-gray-600 mb-2">Tổng Nhân Viên Hoạt Động</h3>
+              <p id="total-active-staff" class="text-3xl font-bold text-blue-600">0</p>
+            </div>
+            <div class="bg-green-50 p-6 rounded-lg">
+              <h3 class="text-sm font-medium text-gray-600 mb-2">Tasks Hoàn Thành Tháng Này</h3>
+              <p id="total-tasks-month" class="text-3xl font-bold text-green-600">0</p>
+            </div>
+            <div class="bg-yellow-50 p-6 rounded-lg">
+              <h3 class="text-sm font-medium text-gray-600 mb-2">Đánh Giá Trung Bình</h3>
+              <p id="avg-rating" class="text-3xl font-bold text-yellow-600">0.0</p>
+            </div>
+          </div>
+
+          <!-- Top Performers -->
+          <div class="mb-8">
+            <h3 class="text-lg font-bold mb-4">Top Performers Tháng Này</h3>
+            <div id="top-performers" class="space-y-4">
+              <!-- Top performer cards will be inserted here -->
+            </div>
+          </div>
+
+          <!-- Performance Table -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nhân Viên
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tasks Giao
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tasks Hoàn Thành
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tỷ Lệ Hoàn Thành
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Thời Gian TB
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Đánh Giá
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="performance-table-body" class="bg-white divide-y divide-gray-200">
+                <!-- Performance rows will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals will be inserted dynamically -->
+    <div id="modal-container"></div>
+
+    <script src="staff_scripts.js"></script>
+  </body>
+</html>

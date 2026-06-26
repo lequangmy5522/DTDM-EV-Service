@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EV Service Center - Khách Hàng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      /* Ẩn thanh cuộn nhưng vẫn cho phép cuộn */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #111827;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #374151;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #4b5563;
+      }
+
+      .page {
+        display: none;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      .page.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+    <nav
+      class="bg-gray-800 shadow-lg sticky top-0 z-40 border-b border-gray-700"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <a
+              href="#"
+              onclick="navigateTo('home')"
+              class="font-bold text-xl text-indigo-400 flex items-center gap-2"
+            >
+              <svg
+                class="w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                ></path>
+              </svg>
+              EV-Service
+            </a>
+            <div class="hidden md:block ml-10">
+              <div class="flex items-baseline space-x-4">
+                <a
+                  href="#"
+                  onclick="navigateTo('home')"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition"
+                  >Trang Chủ</a
+                >
+                <a
+                  href="#"
+                  onclick="navigateTo('inventory-list')"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition"
+                  >Kho Phụ Tùng</a
+                >
+              </div>
+            </div>
+          </div>
+          <div id="nav-auth-links" class="flex items-center space-x-2"></div>
+        </div>
+      </div>
+    </nav>
+
+    <main
+      id="app-container"
+      class="flex-grow max-w-7xl w-full mx-auto py-6 px-4 sm:px-6 lg:px-8"
+    >
+      <div id="home-page" class="page active">
+        <div
+          class="text-center py-20 px-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-2xl border border-gray-700 relative overflow-hidden"
+        >
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"
+          ></div>
+
+          <div class="relative z-10">
+            <h1
+              class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 mb-6"
+            >
+              Dịch Vụ Xe Điện Toàn Năng
+            </h1>
+            <p class="mt-4 text-xl text-gray-400 max-w-2xl mx-auto mb-10">
+              Hệ thống đặt lịch bảo dưỡng, theo dõi sửa chữa và quản lý hồ sơ xe
+              điện chuyên nghiệp, nhanh chóng và minh bạch.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+              <button
+                onclick="navigateTo('booking')"
+                class="bg-indigo-600 text-white font-bold py-4 px-10 rounded-full hover:bg-indigo-700 transition transform hover:scale-105 shadow-lg shadow-indigo-500/30"
+              >
+                Đặt Lịch Ngay
+              </button>
+              <button
+                onclick="navigateTo('profile')"
+                class="bg-gray-700 text-white font-bold py-4 px-10 rounded-full hover:bg-gray-600 transition transform hover:scale-105 border border-gray-600"
+              >
+                Hồ Sơ Của Tôi
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          <div
+            class="bg-gray-800 p-6 rounded-xl border border-gray-700 text-center hover:border-indigo-500 transition"
+          >
+            <div class="text-4xl mb-4">📅</div>
+            <h3 class="text-xl font-bold text-white mb-2">Đặt Lịch Dễ Dàng</h3>
+            <p class="text-gray-400">
+              Chọn chi nhánh, kỹ thuật viên và thời gian chỉ trong 3 bước.
+            </p>
+          </div>
+          <div
+            class="bg-gray-800 p-6 rounded-xl border border-gray-700 text-center hover:border-indigo-500 transition"
+          >
+            <div class="text-4xl mb-4">🔧</div>
+            <h3 class="text-xl font-bold text-white mb-2">Theo Dõi Tiến Độ</h3>
+            <p class="text-gray-400">
+              Cập nhật trạng thái sửa chữa xe của bạn theo thời gian thực.
+            </p>
+          </div>
+          <div
+            class="bg-gray-800 p-6 rounded-xl border border-gray-700 text-center hover:border-indigo-500 transition"
+          >
+            <div class="text-4xl mb-4">💳</div>
+            <h3 class="text-xl font-bold text-white mb-2">Thanh Toán Online</h3>
+            <p class="text-gray-400">
+              Hỗ trợ thanh toán qua MoMo, Ngân hàng với hóa đơn điện tử.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="login-page" class="page">
+        <div
+          class="max-w-md mx-auto bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700 mt-10"
+        >
+          <h2 class="text-3xl font-bold text-center mb-8 text-white">
+            Đăng Nhập
+          </h2>
+          <form id="login-form" class="space-y-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1"
+                >Tài khoản / Email</label
+              >
+              <input
+                type="text"
+                id="login-email-username"
+                class="w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                required
+                placeholder="Nhập username..."
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1"
+                >Mật khẩu</label
+              >
+              <input
+                type="password"
+                id="login-password"
+                class="w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                required
+                placeholder="••••••••"
+              />
+              <div class="flex justify-end mt-2">
+                <a
+                  href="#"
+                  onclick="navigateTo('forget-password')"
+                  class="text-xs text-indigo-400 hover:text-indigo-300"
+                  >Quên mật khẩu?</a
+                >
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition shadow-lg"
+            >
+              Đăng Nhập
+            </button>
+          </form>
+          <p class="text-center mt-6 text-sm text-gray-400">
+            Chưa có tài khoản?
+            <a
+              href="#"
+              onclick="navigateTo('register')"
+              class="text-indigo-400 hover:text-indigo-300 font-semibold"
+              >Đăng ký ngay</a
+            >
+          </p>
+        </div>
+      </div>
+
+      <div id="register-page" class="page">
+        <div
+          class="max-w-md mx-auto bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700 mt-10"
+        >
+          <h2 class="text-3xl font-bold text-center mb-8 text-white">
+            Đăng Ký
+          </h2>
+          <form id="register-form" class="space-y-5">
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1"
+                >Tên đăng nhập</label
+              >
+              <input
+                type="text"
+                id="register-username"
+                class="w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-green-500 focus:outline-none"
+                required
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="register-email"
+                class="w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-green-500 focus:outline-none"
+                required
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1"
+                >Mật khẩu</label
+              >
+              <input
+                type="password"
+                id="register-password"
+                class="w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-green-500 focus:outline-none"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition shadow-lg"
+            >
+              Tạo Tài Khoản
+            </button>
+          </form>
+          <p class="text-center mt-6 text-sm text-gray-400">
+            Đã có tài khoản?
+            <a
+              href="#"
+              onclick="navigateTo('login')"
+              class="text-indigo-400 hover:text-indigo-300 font-semibold"
+              >Đăng nhập</a
+            >
+          </p>
+        </div>
+      </div>
+
+      <div id="forget-password-page" class="page">
+        <div
+          class="max-w-md mx-auto bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700 mt-10"
+        >
+          <h2 class="text-2xl font-bold text-center mb-6 text-white">
+            Khôi Phục Mật Khẩu
+          </h2>
+          <form id="forget-password-form" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1"
+                >Email đăng ký</label
+              >
+              <input
+                type="email"
+                id="forget-email"
+                class="w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition"
+            >
+              Gửi Mã OTP
+            </button>
+          </form>
+
+          <form
+            id="reset-password-form"
+            class="mt-8 hidden space-y-4 border-t border-gray-700 pt-6"
+          >
+            <input type="hidden" id="reset-email-hidden" />
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1"
+                >Mã OTP</label
+              >
+              <input
+                type="text"
+                id="otp-code"
+                class="w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white tracking-widest text-center font-mono"
+                required
+                placeholder="XXXXXX"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1"
+                >Mật khẩu mới</label
+              >
+              <input
+                type="password"
+                id="new-password"
+                class="w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition"
+            >
+              Đổi Mật Khẩu
+            </button>
+          </form>
+          <div class="text-center mt-4">
+            <a
+              href="#"
+              onclick="navigateTo('login')"
+              class="text-sm text-gray-400 hover:text-white"
+              >← Quay lại</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div id="profile-page" class="page">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div class="lg:col-span-1">
+            <div
+              class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 sticky top-24"
+            >
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center text-2xl font-bold text-white"
+                >
+                  👤
+                </div>
+                <div>
+                  <h2 class="text-xl font-bold text-white">Hồ Sơ</h2>
+                  <p class="text-sm text-gray-400">Quản lý thông tin cá nhân</p>
+                </div>
+              </div>
+
+              <div id="profile-details" class="space-y-4 text-gray-300">
+                <div class="border-b border-gray-700 pb-2">
+                  <span
+                    class="text-gray-500 text-xs block uppercase tracking-wider"
+                    >Họ và tên</span
+                  ><span
+                    id="profile-fullname-display"
+                    class="font-medium text-white text-lg"
+                    >...</span
+                  >
+                </div>
+                <div class="border-b border-gray-700 pb-2">
+                  <span
+                    class="text-gray-500 text-xs block uppercase tracking-wider"
+                    >Số điện thoại</span
+                  ><span
+                    id="profile-phone-display"
+                    class="font-medium text-white"
+                    >...</span
+                  >
+                </div>
+                <div class="border-b border-gray-700 pb-2">
+                  <span
+                    class="text-gray-500 text-xs block uppercase tracking-wider"
+                    >Địa chỉ</span
+                  ><span
+                    id="profile-address-display"
+                    class="font-medium text-white"
+                    >...</span
+                  >
+                </div>
+                <div class="border-b border-gray-700 pb-2">
+                  <span
+                    class="text-gray-500 text-xs block uppercase tracking-wider"
+                    >Model xe</span
+                  ><span
+                    id="profile-vehicle-model-display"
+                    class="font-medium text-white"
+                    >...</span
+                  >
+                </div>
+                <div>
+                  <span
+                    class="text-gray-500 text-xs block uppercase tracking-wider"
+                    >Số VIN</span
+                  ><span
+                    id="profile-vin-number-display"
+                    class="font-mono bg-gray-900 px-2 py-1 rounded text-sm text-indigo-300"
+                    >...</span
+                  >
+                </div>
+              </div>
+
+              <button
+                onclick="toggleProfileForm(true)"
+                id="edit-profile-btn"
+                class="mt-6 w-full bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-lg transition flex items-center justify-center gap-2"
+              >
+                <span>✏️</span> Chỉnh Sửa
+              </button>
+
+              <form id="profile-update-form" class="hidden space-y-3 mt-6">
+                <input
+                  class="w-full px-3 py-2 border border-gray-600 rounded bg-gray-900 text-white focus:border-indigo-500 focus:outline-none"
+                  type="text"
+                  id="profile-fullname"
+                  placeholder="Họ và tên"
+                />
+                <input
+                  class="w-full px-3 py-2 border border-gray-600 rounded bg-gray-900 text-white focus:border-indigo-500 focus:outline-none"
+                  type="text"
+                  id="profile-phone"
+                  placeholder="Số điện thoại"
+                />
+                <input
+                  class="w-full px-3 py-2 border border-gray-600 rounded bg-gray-900 text-white focus:border-indigo-500 focus:outline-none"
+                  type="text"
+                  id="profile-address"
+                  placeholder="Địa chỉ"
+                />
+                <input
+                  class="w-full px-3 py-2 border border-gray-600 rounded bg-gray-900 text-white focus:border-indigo-500 focus:outline-none"
+                  type="text"
+                  id="profile-vehicle-model"
+                  placeholder="Model xe"
+                />
+                <input
+                  class="w-full px-3 py-2 border border-gray-600 rounded bg-gray-900 text-white focus:border-indigo-500 focus:outline-none"
+                  type="text"
+                  id="profile-vin-number"
+                  placeholder="Số VIN"
+                />
+                <div class="flex gap-2 pt-2">
+                  <button
+                    type="submit"
+                    class="flex-1 bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
+                  >
+                    Lưu
+                  </button>
+                  <button
+                    type="button"
+                    onclick="toggleProfileForm(false)"
+                    class="flex-1 bg-gray-600 text-white py-2 rounded hover:bg-gray-500"
+                  >
+                    Hủy
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="lg:col-span-2">
+            <div
+              class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 min-h-[500px]"
+            >
+              <div
+                class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4"
+              >
+                <h3
+                  class="text-xl font-bold text-white flex items-center gap-2"
+                >
+                  <span>📅</span> Lịch Sử Đặt Lịch
+                </h3>
+                <button
+                  onclick="navigateTo('booking')"
+                  class="text-sm bg-indigo-600 px-4 py-2 rounded-lg hover:bg-indigo-700 text-white font-medium shadow-lg shadow-indigo-500/20"
+                >
+                  + Đặt lịch mới
+                </button>
+              </div>
+              <div
+                id="profile-booking-list"
+                class="space-y-4 max-h-[600px] overflow-y-auto pr-2"
+              >
+                <p class="text-gray-400 text-center italic py-8">
+                  Đang tải lịch sử...
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="booking-page" class="page">
+        <div
+          class="max-w-2xl mx-auto bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700"
+        >
+          <h2 class="text-3xl font-bold mb-2 text-white text-center">
+            Đặt Lịch Dịch Vụ
+          </h2>
+          <p class="text-gray-400 text-center mb-8">
+            Vui lòng điền thông tin bên dưới để đặt hẹn.
+          </p>
+
+          <form id="booking-form" class="space-y-6">
+            <div class="bg-gray-700/50 p-5 rounded-xl border border-gray-600">
+              <label
+                for="center-id"
+                class="block text-base font-semibold text-indigo-300 mb-2 flex items-center gap-2"
+              >
+                <span>🏢</span> 1. Chọn Trung tâm Dịch vụ
+              </label>
+              <select
+                id="center-id"
+                class="block w-full px-4 py-3 border border-gray-500 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                required
+              >
+                <option value="">-- Đang tải danh sách... --</option>
+              </select>
+              <p
+                class="mt-2 text-sm text-gray-300 italic pl-1"
+                id="center-address-hint"
+              ></p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label
+                  for="service-type"
+                  class="block text-sm font-medium text-gray-300 mb-1"
+                  >2. Loại Dịch Vụ</label
+                >
+                <select
+                  id="service-type"
+                  class="block w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-indigo-500"
+                  required
+                >
+                  <option value="Bảo dưỡng định kỳ">Bảo dưỡng định kỳ</option>
+                  <option value="Sửa chữa hệ thống pin">
+                    Sửa chữa hệ thống pin
+                  </option>
+                  <option value="Kiểm tra tổng quát">Kiểm tra tổng quát</option>
+                  <option value="Thay thế phụ tùng">Thay thế phụ tùng</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  for="technician-id"
+                  class="block text-sm font-medium text-gray-300 mb-1"
+                  >3. Mã Kỹ Thuật Viên (Nếu có)</label
+                >
+                <input
+                  type="text"
+                  id="technician-id"
+                  placeholder="Để trống nếu không có"
+                  pattern="[0-9]*"
+                  inputmode="numeric"
+                  class="block w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label
+                  for="start-time"
+                  class="block text-sm font-medium text-gray-300 mb-1"
+                  >4. Thời gian Bắt đầu</label
+                >
+                <input
+                  type="datetime-local"
+                  id="start-time"
+                  class="block w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="end-time"
+                  class="block text-sm font-medium text-gray-300 mb-1"
+                  >Thời gian Kết thúc (Dự kiến)</label
+                >
+                <input
+                  type="datetime-local"
+                  id="end-time"
+                  class="block w-full px-4 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+            </div>
+
+            <input type="hidden" id="station-id" value="1" />
+
+            <button
+              type="submit"
+              class="w-full bg-indigo-600 text-white font-bold py-4 px-6 rounded-xl hover:bg-indigo-700 transition transform hover:scale-[1.01] shadow-lg mt-6 text-lg"
+            >
+              Xác Nhận Đặt Lịch
+            </button>
+          </form>
+        </div>
+        <div id="my-bookings-container" class="max-w-2xl mx-auto mt-12">
+          <h3
+            class="text-xl font-bold text-white mb-4 pl-2 border-l-4 border-indigo-500"
+          >
+            Lịch Hẹn Gần Đây
+          </h3>
+          <div id="booking-list" class="space-y-4"></div>
+        </div>
+      </div>
+
+      <div id="invoice-history-page" class="page">
+        <h2 class="text-3xl font-bold mb-6 text-white flex items-center gap-3">
+          <span>💰</span> Tài Chính & Hóa Đơn
+        </h2>
+
+        <div class="border-b border-gray-700 mb-6">
+          <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
+            <li class="mr-2">
+              <button
+                id="tab-invoices"
+                class="inline-block p-4 text-indigo-400 border-b-2 border-indigo-400 rounded-t-lg active transition"
+                onclick="showHistory('invoices', this)"
+              >
+                Hóa Đơn
+              </button>
+            </li>
+            <li class="mr-2">
+              <button
+                id="tab-payments"
+                class="inline-block p-4 text-gray-400 hover:text-gray-300 border-b-2 border-transparent hover:border-gray-300 rounded-t-lg transition"
+                onclick="showHistory('payments', this)"
+              >
+                Lịch Sử Giao Dịch
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div id="history-content-invoices" class="history-content">
+          <div
+            id="invoice-list-container"
+            class="space-y-4 grid grid-cols-1 gap-4"
+          >
+            <div class="text-center text-gray-500 py-8">
+              Đang tải dữ liệu...
+            </div>
+          </div>
+        </div>
+
+        <div id="history-content-payments" class="history-content hidden">
+          <div
+            id="payment-history-list-container"
+            class="space-y-4 grid grid-cols-1 gap-4"
+          >
+            <div class="text-center text-gray-500 py-8">
+              Đang tải dữ liệu...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="my-tasks-page" class="page">
+        <h2 class="text-3xl font-bold mb-2 text-white">Theo Dõi Sửa Chữa</h2>
+        <p class="text-gray-400 mb-8">
+          Cập nhật tiến độ bảo trì từ kỹ thuật viên.
+        </p>
+
+        <div
+          id="my-tasks-list-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <div class="col-span-full text-center text-gray-500">Đang tải...</div>
+        </div>
+      </div>
+
+      <div id="inventory-list-page" class="page">
+        <h2 class="text-3xl font-bold mb-2 text-white">
+          Kho Phụ Tùng & Vật Tư
+        </h2>
+        <p class="text-gray-400 mb-8">
+          Danh sách các linh kiện sẵn có tại hệ thống.
+        </p>
+
+        <div
+          id="inventory-list-container"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        >
+          <div
+            class="col-span-full text-center py-12 bg-gray-800 rounded-xl text-gray-400 border border-gray-700"
+          >
+            <div class="animate-pulse">Đang tải danh sách vật tư...</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div
+      id="invoice-detail-modal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-90 backdrop-blur-sm overflow-y-auto h-full w-full flex items-center justify-center hidden z-50 px-4"
+    >
+      <div
+        class="bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-2xl border border-gray-600 relative transform transition-all"
+      >
+        <button
+          onclick="closeInvoiceDetailModal()"
+          class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl"
+        >
+          &times;
+        </button>
+
+        <div
+          class="flex justify-between items-start mb-6 border-b border-gray-700 pb-4"
+        >
+          <div>
+            <h3 class="text-2xl font-bold text-white">Chi Tiết Hóa Đơn</h3>
+            <p class="text-indigo-400 font-mono text-sm mt-1">
+              #<span id="invoice-detail-id"></span>
+            </p>
+          </div>
+          <span
+            id="invoice-detail-status"
+            class="px-3 py-1 rounded-full text-sm font-bold border"
+          ></span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 text-sm text-gray-300 mb-6">
+          <div class="bg-gray-700/50 p-3 rounded-lg">
+            <span class="block text-xs text-gray-500 uppercase">Ngày tạo</span>
+            <span
+              id="invoice-detail-date"
+              class="text-white font-medium"
+            ></span>
+          </div>
+          <div class="bg-gray-700/50 p-3 rounded-lg text-right">
+            <span class="block text-xs text-gray-500 uppercase">Tổng tiền</span>
+            <span
+              id="invoice-detail-total"
+              class="text-xl font-bold text-red-400"
+            ></span>
+          </div>
+        </div>
+
+        <div
+          class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700"
+        >
+          <table class="min-w-full divide-y divide-gray-700">
+            <thead class="bg-gray-800">
+              <tr>
+                <th
+                  class="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase"
+                >
+                  Mô tả
+                </th>
+                <th
+                  class="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase"
+                >
+                  SL
+                </th>
+                <th
+                  class="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase"
+                >
+                  Đơn giá
+                </th>
+                <th
+                  class="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase"
+                >
+                  Thành tiền
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              id="invoice-items-table-body"
+              class="divide-y divide-gray-700 text-sm"
+            ></tbody>
+          </table>
+        </div>
+        <div class="flex justify-end mt-6">
+          <button
+            onclick="closeInvoiceDetailModal()"
+            class="bg-gray-600 hover:bg-gray-500 text-white px-6 py-2 rounded-lg transition font-medium"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="payment-modal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-90 backdrop-blur-sm overflow-y-auto h-full w-full flex items-center justify-center hidden z-50 px-4"
+    >
+      <div
+        class="bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-lg border border-gray-600 relative"
+      >
+        <button
+          onclick="closePaymentModal()"
+          class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl"
+        >
+          &times;
+        </button>
+
+        <h3 class="text-2xl font-bold mb-2 text-white text-center">
+          Thanh Toán
+        </h3>
+        <p class="text-gray-400 mb-6 text-center text-sm">
+          Hóa đơn #<span
+            id="payment-invoice-id"
+            class="font-mono text-white"
+          ></span>
+        </p>
+
+        <div
+          class="bg-gradient-to-r from-gray-700 to-gray-800 p-6 rounded-xl mb-8 text-center border border-gray-600"
+        >
+          <p class="text-sm text-gray-400 uppercase tracking-wider mb-1">
+            Số tiền cần thanh toán
+          </p>
+          <p class="text-4xl font-extrabold text-green-400 mt-1">
+            <span id="payment-amount"></span>
+          </p>
+        </div>
+
+        <div id="payment-method-selection" class="space-y-3 mb-6">
+          <p class="text-sm font-medium text-gray-300 mb-2">
+            Chọn phương thức:
+          </p>
+          <button
+            onclick="processPayment('bank_transfer')"
+            class="w-full flex items-center justify-between bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl transition group shadow-lg shadow-blue-900/20"
+          >
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🏦</span>
+              <span class="font-bold">Chuyển khoản Ngân hàng</span>
+            </div>
+            <span class="group-hover:translate-x-1 transition-transform"
+              >→</span
+            >
+          </button>
+          <button
+            onclick="processPayment('momo_qr')"
+            class="w-full flex items-center justify-between bg-pink-600 hover:bg-pink-700 text-white p-4 rounded-xl transition group shadow-lg shadow-pink-900/20"
+          >
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📱</span>
+              <span class="font-bold">Ví MoMo / QR Code</span>
+            </div>
+            <span class="group-hover:translate-x-1 transition-transform"
+              >→</span
+            >
+          </button>
+        </div>
+
+        <div
+          id="payment-details-container"
+          class="hidden bg-gray-900 p-5 rounded-xl border border-gray-600"
+        >
+          <h4
+            id="payment-detail-title"
+            class="text-lg font-bold text-indigo-400 mb-4 text-center border-b border-gray-700 pb-2"
+          >
+            Thông Tin Thanh Toán
+          </h4>
+
+          <div id="qr-code-display" class="hidden text-center">
+            <div class="bg-white p-3 inline-block rounded-lg">
+              <img
+                id="qr-image"
+                class="w-48 h-48 object-contain"
+                src=""
+                alt="QR Code"
+              />
+            </div>
+            <p class="mt-3 text-sm text-gray-400">Quét mã để thanh toán</p>
+            <div class="mt-3 bg-gray-800 p-3 rounded border border-gray-700">
+              <p class="text-xs text-gray-500">Nội dung chuyển khoản</p>
+              <p
+                class="font-mono text-yellow-400 font-bold select-all"
+                id="payment-note-qr"
+              ></p>
+            </div>
+          </div>
+
+          <div
+            id="bank-info-display"
+            class="hidden space-y-3 text-sm text-gray-300"
+          >
+            <div class="flex justify-between border-b border-gray-800 pb-2">
+              <span>Ngân hàng</span>
+              <span id="bank-name" class="text-white font-bold"></span>
+            </div>
+            <div class="flex justify-between border-b border-gray-800 pb-2">
+              <span>Chủ TK</span>
+              <span id="account-name" class="text-white font-bold"></span>
+            </div>
+            <div class="flex justify-between border-b border-gray-800 pb-2">
+              <span>Số TK</span>
+              <span
+                id="account-number"
+                class="text-yellow-400 font-mono font-bold text-lg select-all"
+              ></span>
+            </div>
+            <div class="flex justify-between border-b border-gray-800 pb-2">
+              <span>Số tiền</span>
+              <span id="amount-bank" class="text-white font-bold"></span>
+            </div>
+            <div class="bg-gray-800 p-3 rounded border border-gray-700 mt-2">
+              <span class="block text-xs text-gray-500 mb-1"
+                >Nội dung chuyển khoản (Bắt buộc)</span
+              >
+              <span
+                id="payment-note-bank"
+                class="block font-mono text-yellow-400 font-bold select-all cursor-pointer"
+              ></span>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4">
+            <p class="text-xs text-center text-gray-600 mb-2">
+              Môi trường Test (Transaction ID:
+              <span id="test-code-display"></span>)
+            </p>
+            <button
+              onclick="simulatePaymentSuccess()"
+              id="simulate-success-btn"
+              class="w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-xl transition font-bold shadow-lg shadow-green-900/30"
+            >
+              ✅ [TEST] Xác nhận Đã Thanh Toán
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="loading-spinner"
+      class="fixed inset-0 bg-gray-900 bg-opacity-95 flex flex-col items-center justify-center z-[60] hidden backdrop-blur-sm transition-opacity"
+    >
+      <div
+        class="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4"
+      ></div>
+      <p
+        class="text-indigo-400 animate-pulse font-medium tracking-widest uppercase text-sm"
+      >
+        Đang xử lý...
+      </p>
+    </div>
+
+    <!-- Floating Chat Button -->
+    <button
+      id="chat-toggle-btn"
+      onclick="toggleChat()"
+      class="fixed bottom-6 right-6 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full p-4 shadow-2xl z-50 transition-all transform hover:scale-110"
+      style="display: none"
+    >
+      <svg
+        id="chat-icon-open"
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+        ></path>
+      </svg>
+      <svg
+        id="chat-icon-close"
+        class="w-6 h-6 hidden"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        ></path>
+      </svg>
+      <span
+        id="chat-unread-badge"
+        class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold hidden"
+      ></span>
+    </button>
+
+    <!-- Inline Chat Widget -->
+    <div
+      id="chat-widget"
+      class="fixed bottom-24 right-6 w-96 h-[500px] bg-gray-800 rounded-xl shadow-2xl z-50 hidden flex flex-col border border-gray-700"
+    >
+      <!-- Chat Header -->
+      <div
+        class="bg-indigo-600 text-white px-4 py-3 rounded-t-xl flex items-center justify-between"
+      >
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+            ></path>
+          </svg>
+          <span class="font-semibold">Hỗ trợ khách hàng</span>
+          <span id="chat-status-indicator" class="text-xs text-indigo-200"></span>
+        </div>
+        <button onclick="toggleChat()" class="hover:bg-indigo-700 rounded p-1 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Chat Messages -->
+      <div
+        id="chat-messages"
+        class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-900"
+      >
+        <div class="text-center text-gray-500 text-sm py-8">
+          Chào mừng! Hãy gửi tin nhắn để bắt đầu trò chuyện.
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div id="typing-indicator" class="px-4 py-2 text-sm text-gray-400 italic hidden">
+        Nhân viên đang gõ...
+      </div>
+
+      <!-- Chat Input -->
+      <div class="p-4 bg-gray-800 border-t border-gray-700 rounded-b-xl">
+        <div class="flex gap-2">
+          <input
+            type="text"
+            id="chat-input"
+            placeholder="Nhập tin nhắn..."
+            class="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            onkeypress="handleChatKeyPress(event)"
+          />
+          <button
+            onclick="sendChatMessage()"
+            class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg transition"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="scripts.js?v=8"></script>
+  </body>
+</html>

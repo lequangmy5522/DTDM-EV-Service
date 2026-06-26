@@ -1,0 +1,7 @@
+**/migrations/
+# Bỏ qua tất cả các thư mục cache của Python
+# Python
+__pycache__/
+*.pyc
+.venv
+venv
