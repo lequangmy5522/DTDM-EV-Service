@@ -214,8 +214,8 @@ services:
   # ===================== FINANCE SERVICE =====================
   finance-service:
     build:
-      context: .
-      dockerfile: services/finance-service/Dockerfile
+      context: ./services/finance-service
+      dockerfile: Dockerfile
     container_name: finance-serviced
     command: gunicorn --bind 0.0.0.0:8002 "app:create_app()"
     volumes:
@@ -438,8 +438,8 @@ services:
   # ===================== API GATEWAY (NGINX) =====================
   api-gateway:
     build:
-      context: .
-      dockerfile: ./api-gateway/Dockerfile
+      context: ./api-gateway
+      dockerfile: Dockerfile
     container_name: api_gateway
     ports:
       - "80:80"
