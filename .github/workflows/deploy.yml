@@ -13,123 +13,110 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Login Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      #########################
-      # Build & Push Frontend #
-      #########################
-
-      - name: Build frontend
-        uses: docker/build-push-action@v6
+      # Frontend
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/frontend
-          file: ./DTDM/EV-Service-Center-Full/frontend/dockerfile
+          context: ./EV-Service-Center-Full/frontend
+          file: ./EV-Service-Center-Full/frontend/dockerfile
           push: true
           tags: lequangm/frontend:latest
 
-      ##########################
-      # Build API Gateway      #
-      ##########################
-
-      - name: Build API Gateway
-        uses: docker/build-push-action@v6
+      # API Gateway
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/api-gateway
-          file: ./DTDM/EV-Service-Center-Full/api-gateway/Dockerfile
+          context: ./EV-Service-Center-Full/api-gateway
+          file: ./EV-Service-Center-Full/api-gateway/Dockerfile
           push: true
           tags: lequangm/api-gateway:latest
 
-      ##########################
-      # Services               #
-      ##########################
-
-      - name: Build User Service
-        uses: docker/build-push-action@v6
+      # User Service
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/services/user-service
-          file: ./DTDM/EV-Service-Center-Full/services/user-service/Dockerfile
+          context: ./EV-Service-Center-Full/services/user-service
+          file: ./EV-Service-Center-Full/services/user-service/Dockerfile
           push: true
           tags: lequangm/user-service:latest
 
-      - name: Build Inventory Service
-        uses: docker/build-push-action@v6
+      # Inventory Service
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/services/inventory-service
-          file: ./DTDM/EV-Service-Center-Full/services/inventory-service/Dockerfile
+          context: ./EV-Service-Center-Full/services/inventory-service
+          file: ./EV-Service-Center-Full/services/inventory-service/Dockerfile
           push: true
           tags: lequangm/inventory-service:latest
 
-      - name: Build Booking Service
-        uses: docker/build-push-action@v6
+      # Booking Service
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/services/booking-service
-          file: ./DTDM/EV-Service-Center-Full/services/booking-service/Dockerfile
+          context: ./EV-Service-Center-Full/services/booking-service
+          file: ./EV-Service-Center-Full/services/booking-service/Dockerfile
           push: true
           tags: lequangm/booking-service:latest
 
-      - name: Build Finance Service
-        uses: docker/build-push-action@v6
+      # Finance Service
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/services/finance-service
-          file: ./DTDM/EV-Service-Center-Full/services/finance-service/Dockerfile
+          context: ./EV-Service-Center-Full/services/finance-service
+          file: ./EV-Service-Center-Full/services/finance-service/Dockerfile
           push: true
           tags: lequangm/finance-service:latest
 
-      - name: Build Maintenance Service
-        uses: docker/build-push-action@v6
+      # Maintenance Service
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/services/maintenance-service
-          file: ./DTDM/EV-Service-Center-Full/services/maintenance-service/Dockerfile
+          context: ./EV-Service-Center-Full/services/maintenance-service
+          file: ./EV-Service-Center-Full/services/maintenance-service/Dockerfile
           push: true
           tags: lequangm/maintenance-service:latest
 
-      - name: Build Payment Service
-        uses: docker/build-push-action@v6
+      # Payment Service
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/services/payment-service
-          file: ./DTDM/EV-Service-Center-Full/services/payment-service/Dockerfile
+          context: ./EV-Service-Center-Full/services/payment-service
+          file: ./EV-Service-Center-Full/services/payment-service/Dockerfile
           push: true
           tags: lequangm/payment-service:latest
 
-      - name: Build Notification Service
-        uses: docker/build-push-action@v6
+      # Notification Service
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/services/notification-service
-          file: ./DTDM/EV-Service-Center-Full/services/notification-service/Dockerfile
+          context: ./EV-Service-Center-Full/services/notification-service
+          file: ./EV-Service-Center-Full/services/notification-service/Dockerfile
           push: true
           tags: lequangm/notification-service:latest
 
-      - name: Build Report Service
-        uses: docker/build-push-action@v6
+      # Report Service
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/services/report-service
-          file: ./DTDM/EV-Service-Center-Full/services/report-service/Dockerfile
+          context: ./EV-Service-Center-Full/services/report-service
+          file: ./EV-Service-Center-Full/services/report-service/Dockerfile
           push: true
           tags: lequangm/report-service:latest
 
-      - name: Build Chat Service
-        uses: docker/build-push-action@v6
+      # Chat Service
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/services/chat-service
-          file: ./DTDM/EV-Service-Center-Full/services/chat-service/Dockerfile
+          context: ./EV-Service-Center-Full/services/chat-service
+          file: ./EV-Service-Center-Full/services/chat-service/Dockerfile
           push: true
           tags: lequangm/chat-service:latest
 
-      - name: Build Staff Service
-        uses: docker/build-push-action@v6
+      # Staff Service
+      - uses: docker/build-push-action@v6
         with:
-          context: ./DTDM/EV-Service-Center-Full/services/staff-service
-          file: ./DTDM/EV-Service-Center-Full/services/staff-service/Dockerfile
+          context: ./EV-Service-Center-Full/services/staff-service
+          file: ./EV-Service-Center-Full/services/staff-service/Dockerfile
           push: true
           tags: lequangm/staff-service:latest
-
-      ###################################
-      # SSH vào Azure VM và Deploy
-      ###################################
 
       - name: Deploy to Azure VM
         uses: appleboy/ssh-action@v1.2.0
@@ -138,7 +125,7 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
-            cd ~/DTDM-EV-Service/DTDM/EV-Service-Center-Full
+            cd ~/DTDM-EV-Service/EV-Service-Center-Full
+            git pull origin main
             docker compose pull
-            docker compose down
-            docker compose up -d
+            docker compose up -d --remove-orphans
