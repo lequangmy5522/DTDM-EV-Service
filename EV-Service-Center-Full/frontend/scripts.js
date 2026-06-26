@@ -1168,7 +1168,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // CHAT FUNCTIONALITY
 // ========================
 
-const CHAT_API_URL = "/api/chat";
+const CHAT_API_URL = `${API_BASE_URL}/api/chat`;
 let chatSocket = null;
 let currentChatRoom = null;
 let chatOpen = false;

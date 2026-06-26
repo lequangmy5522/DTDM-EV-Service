@@ -3,7 +3,7 @@
 // =============================================================================
 window.ADMIN_TOKEN_KEY = "admin_jwt_token";
 window.ADMIN_ROLE = "admin";
-const API_BASE_URL = "http://localhost"; // Gateway Port
+const API_BASE_URL = "http://13.70.33.44"; // Gateway Port
 
 // --- UI Utilities ---
 window.showToast = function (message, isError = false) {
@@ -1420,7 +1420,7 @@ document
 
     try {
       const res = await fetch(
-        "http://localhost/internal/notifications/create",
+        "http://13.70.33.44/internal/notifications/create",
         {
           method: "POST",
           headers: {
@@ -1626,7 +1626,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // 14. ADMIN CHAT MANAGEMENT
 // =============================================================================
 
-const ADMIN_CHAT_API_URL = "/api/chat";
+const ADMIN_CHAT_API_URL=`${API_BASE_URL}/api/chat`;
 let adminChatSocket = null;
 let currentAdminChatRoom = null;
 let currentChatTab = "waiting";

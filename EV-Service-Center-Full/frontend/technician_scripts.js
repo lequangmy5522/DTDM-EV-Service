@@ -1,7 +1,7 @@
 // ==================== CONSTANTS ====================
 const TECH_TOKEN_KEY = "tech_access_token";
 // Sử dụng API Gateway (Cổng 80) làm đầu mối duy nhất, thay vì trỏ thẳng vào một service
-const API_BASE_URL = window.location.origin; // Sẽ là http://localhost nếu chạy local
+const API_BASE_URL = "http://13.70.33.44"; // Sẽ là http://localhost nếu chạy local
 
 // ==================== UTILITY FUNCTIONS ====================
 function showToast(message, isError = false) {

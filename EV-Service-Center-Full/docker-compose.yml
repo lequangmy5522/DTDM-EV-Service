@@ -373,7 +373,7 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db-chat:5432/ev_chat_db
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
       - INTERNAL_SERVICE_TOKEN=${INTERNAL_SERVICE_TOKEN}
-      - ALLOWED_ORIGINS=http://localhost,http://localhost:80
+      - ALLOWED_ORIGINS=http://13.70.33.44,http://13.70.33.44:80
     ports:
       - "8007:8007"
     expose:
