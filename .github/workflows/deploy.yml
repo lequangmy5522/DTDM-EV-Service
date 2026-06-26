@@ -13,6 +13,14 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Show repository structure
+        run: |
+          pwd
+          echo "===== ROOT ====="
+          ls -la
+          echo "===== TREE ====="
+          find . -maxdepth 3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -23,7 +31,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       # Frontend
-      - uses: docker/build-push-action@v6
+      - name: Build Frontend
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/frontend
           file: ./EV-Service-Center-Full/frontend/dockerfile
@@ -31,7 +40,8 @@ jobs:
           tags: lequangm/frontend:latest
 
       # API Gateway
-      - uses: docker/build-push-action@v6
+      - name: Build API Gateway
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/api-gateway
           file: ./EV-Service-Center-Full/api-gateway/Dockerfile
@@ -39,7 +49,8 @@ jobs:
           tags: lequangm/api-gateway:latest
 
       # User Service
-      - uses: docker/build-push-action@v6
+      - name: Build User Service
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/services/user-service
           file: ./EV-Service-Center-Full/services/user-service/Dockerfile
@@ -47,7 +58,8 @@ jobs:
           tags: lequangm/user-service:latest
 
       # Inventory Service
-      - uses: docker/build-push-action@v6
+      - name: Build Inventory Service
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/services/inventory-service
           file: ./EV-Service-Center-Full/services/inventory-service/Dockerfile
@@ -55,7 +67,8 @@ jobs:
           tags: lequangm/inventory-service:latest
 
       # Booking Service
-      - uses: docker/build-push-action@v6
+      - name: Build Booking Service
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/services/booking-service
           file: ./EV-Service-Center-Full/services/booking-service/Dockerfile
@@ -63,7 +76,8 @@ jobs:
           tags: lequangm/booking-service:latest
 
       # Finance Service
-      - uses: docker/build-push-action@v6
+      - name: Build Finance Service
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/services/finance-service
           file: ./EV-Service-Center-Full/services/finance-service/Dockerfile
@@ -71,7 +85,8 @@ jobs:
           tags: lequangm/finance-service:latest
 
       # Maintenance Service
-      - uses: docker/build-push-action@v6
+      - name: Build Maintenance Service
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/services/maintenance-service
           file: ./EV-Service-Center-Full/services/maintenance-service/Dockerfile
@@ -79,7 +94,8 @@ jobs:
           tags: lequangm/maintenance-service:latest
 
       # Payment Service
-      - uses: docker/build-push-action@v6
+      - name: Build Payment Service
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/services/payment-service
           file: ./EV-Service-Center-Full/services/payment-service/Dockerfile
@@ -87,7 +103,8 @@ jobs:
           tags: lequangm/payment-service:latest
 
       # Notification Service
-      - uses: docker/build-push-action@v6
+      - name: Build Notification Service
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/services/notification-service
           file: ./EV-Service-Center-Full/services/notification-service/Dockerfile
@@ -95,7 +112,8 @@ jobs:
           tags: lequangm/notification-service:latest
 
       # Report Service
-      - uses: docker/build-push-action@v6
+      - name: Build Report Service
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/services/report-service
           file: ./EV-Service-Center-Full/services/report-service/Dockerfile
@@ -103,7 +121,8 @@ jobs:
           tags: lequangm/report-service:latest
 
       # Chat Service
-      - uses: docker/build-push-action@v6
+      - name: Build Chat Service
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/services/chat-service
           file: ./EV-Service-Center-Full/services/chat-service/Dockerfile
@@ -111,7 +130,8 @@ jobs:
           tags: lequangm/chat-service:latest
 
       # Staff Service
-      - uses: docker/build-push-action@v6
+      - name: Build Staff Service
+        uses: docker/build-push-action@v6
         with:
           context: ./EV-Service-Center-Full/services/staff-service
           file: ./EV-Service-Center-Full/services/staff-service/Dockerfile
